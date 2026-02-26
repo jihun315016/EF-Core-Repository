@@ -1,4 +1,4 @@
-﻿namespace EmployeeAPP.Models
+﻿namespace EmployeeAPP.Models.Entities
 {
     public class Employee
     {
