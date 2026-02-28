@@ -6,8 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 // DB 연결 및 SQL 로그 설정
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .LogTo(Console.WriteLine, LogLevel.Information)); // 콘솔에 SQL 출력
+        .UseLazyLoadingProxies()
+        .LogTo(Console.WriteLine, LogLevel.Information)); // 콘솔에 SQL 출력
 
+// JSON 순환 참조 방지 (NewtonsoftJson 사용 시)
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 // Add services to the container.
 
